@@ -1,0 +1,4 @@
+.pokemonSelectContainer {
+  display: flex;
+  flex-direction: row;
+}

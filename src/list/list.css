@@ -1,0 +1,26 @@
+.gridList {
+  display: grid;
+  /* grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); */
+  grid-template-columns: repeat(4, 1fr);
+  overflow: auto;
+}
+
+.gridList {
+  scrollbar-width: thin;
+  scrollbar-color: lightgrey white;
+}
+
+/* Works on Chrome, Edge, and Safari */
+.gridList::-webkit-scrollbar {
+  width: 5px;
+}
+
+.gridList::-webkit-scrollbar-track {
+  background: white;
+}
+
+.gridList::-webkit-scrollbar-thumb {
+  background-color: lightgrey;
+  border-radius: 10px;
+  border: 3px solid lightgrey;
+}
