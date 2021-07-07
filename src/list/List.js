@@ -1,37 +1,39 @@
 import axios from "axios";
 import { useState, useEffect, useCallback } from "react";
-import Loader from "../utils/Loader";
 import ListSummary from "./ListSummary";
 import "./list.css";
 
-export default function List({ setDisplayId }) {
+export default function List({ setViewId }) {
   const [pokemonList, setPokemonList] = useState();
   const [isError, setIsError] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const getPokemons = useCallback(async (searchQuery) => {
-    if (!searchQuery.length) {
-      try {
-        const { data } = await axios.get("http://localhost:3001/pokemon");
-        setPokemonList(data);
-        setIsError(false);
-      } catch (err) {
-        console.log(err.response.data);
-        setIsError(err.response.data);
+  const getPokemons = useCallback(
+    async (searchQuery) => {
+      if (!searchQuery.length) {
+        try {
+          const { data } = await axios.get("http://localhost:3001/pokemon");
+          setPokemonList(data);
+          setIsError(false);
+        } catch (err) {
+          console.log(err.response.data);
+          setIsError(err.response.data);
+        }
+      } else {
+        try {
+          const { data } = await axios.get(
+            `https://serene-gorge-52427.herokuapp.com/pokemon/search/${searchQuery}`
+          );
+          setPokemonList(data);
+          setIsError(false);
+        } catch (err) {
+          console.log(err.response.data);
+          setIsError(err.response.data);
+        }
       }
-    } else {
-      try {
-        const { data } = await axios.get(
-          `http://localhost:3001/pokemon/search/${searchQuery}`
-        );
-        setPokemonList(data);
-        setIsError(false);
-      } catch (err) {
-        console.log(err.response.data);
-        setIsError(err.response.data);
-      }
-    }
-  }, []);
+    },
+    [searchQuery]
+  );
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -43,11 +45,8 @@ export default function List({ setDisplayId }) {
   };
 
   useEffect(() => {
-    console.log("list component did mount");
     getPokemons(searchQuery);
-  }, [getPokemons]);
-
-  console.log("list component rendered");
+  }, [getPokemons, searchQuery]);
 
   return (
     <div>
@@ -65,7 +64,6 @@ export default function List({ setDisplayId }) {
         </button>
       </form>
       <div class="gridList">
-        {!pokemonList && <Loader></Loader>}
         {/* {isError && }  */}
         {!isError &&
           pokemonList &&
@@ -73,7 +71,7 @@ export default function List({ setDisplayId }) {
             return (
               <ListSummary
                 pokemon={pokemon}
-                setDisplayId={setDisplayId}
+                setViewId={setViewId}
                 key={pokemon.id}
               >
                 {pokemon.name.english}

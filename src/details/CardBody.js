@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Line } from "rc-progress";
 
-export default function DetailsBody({
-  setPlayerOne,
-  setPlayerTwo,
+export default function CardBody({
+  players,
+  setPlayers,
   isPlayerSelect,
   details,
   isToggleVisibility,
@@ -14,6 +14,7 @@ export default function DetailsBody({
   const handleToggleVisibility = (e) => {
     setIsVisible(!isVisible);
   };
+
   return (
     <div>
       {isToggleVisibility && (
@@ -31,13 +32,13 @@ export default function DetailsBody({
         <div class="d-flex flex-row justify-content-center">
           <button
             class="btn btn-primary d-block m-3"
-            onClick={() => setPlayerOne(details)}
+            onClick={() => setPlayers({ ...players, playerOne: details })}
           >
             Set Player One
           </button>
           <button
             class="btn btn-primary d-block m-3"
-            onClick={() => setPlayerTwo(details)}
+            onClick={() => setPlayers({ ...players, playerTwo: details })}
           >
             Set PlayerTwo
           </button>
@@ -56,11 +57,16 @@ export default function DetailsBody({
           <h6>Base</h6>
           <ul className="list-unstyled">
             {Object.keys(details.base).map((key) => {
+              if (key === "HP") {
+                return null;
+              }
               return (
                 <li className="mb-3">
                   <p className="m-0">{key}</p>
                   <Line
-                    percent={String(details.base[key])}
+                    percent={
+                      details.base[key] < 0 ? "0" : String(details.base[key])
+                    }
                     strokeWidth="4"
                     strokeColor="#D3D3D3"
                   />

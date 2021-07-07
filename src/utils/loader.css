@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+.pokeball-container {
+  margin: 5rem;
+}
+
 .o-pokeball {
   box-sizing: content-box;
   width: 50px;
