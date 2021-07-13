@@ -23,10 +23,10 @@ export default function MainController() {
   const [players, setPlayers] = useState({});
   const [isFighting, setIsFighting] = useState();
   const [fightComments, setFightComments] = useState();
+  const [fightResults, setFightResults] = useState();
 
   const history = useHistory();
   const pokeUrl = process.env.REACT_APP_POKEURL;
-  console.log(pokeUrl);
   // POKEURL =https://serene-gorge-52427.herokuapp.com
 
   // GET  details
@@ -39,12 +39,33 @@ export default function MainController() {
     }
   }, [viewId]);
 
+  // Helper function for posting fight results to leaderboard
+  const postResults = useCallback(async () => {
+    try {
+      const { data } = await axios.post(
+        `${pokeUrl}/leaderboard/postresult`,
+        fightResults
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [fightResults]);
+
   useEffect(() => {
     getPokemon();
-  }, [getPokemon]);
+    if (fightResults) postResults();
+  }, [getPokemon, postResults]);
 
   // Pokemon Fight Logic
-  useGetFight(players, setPlayers, setFightComments, isFighting, setIsFighting);
+  useGetFight(
+    players,
+    setPlayers,
+    setFightComments,
+    isFighting,
+    setIsFighting,
+    setFightResults
+  );
 
   return (
     <main class="d-flex containerMain">
@@ -58,7 +79,11 @@ export default function MainController() {
             <Route path="/:arena?">
               {/* Upper part of the page: display players in "Arena" view */}
               <Arena>
-                <Card details={players.playerOne} style={{ width: "20%" }}>
+                <Card
+                  details={players.playerOne}
+                  style={{ width: "20%" }}
+                  winner={fightResults}
+                >
                   <CardBody
                     details={players.playerOne}
                     isToggleVisibility={true}
@@ -73,7 +98,11 @@ export default function MainController() {
                   style={{ width: "20%" }}
                 ></Vs>
 
-                <Card details={players.playerTwo} style={{ width: "20%" }}>
+                <Card
+                  details={players.playerTwo}
+                  style={{ width: "20%" }}
+                  winner={fightResults}
+                >
                   <CardBody
                     details={players.playerTwo}
                     isToggleVisibility={true}
@@ -83,7 +112,7 @@ export default function MainController() {
             </Route>
           </Switch>
 
-          <Route path="/">
+          <Route path="/" exact={true}>
             <Select>
               <Card details={viewData}>
                 <CardBody
@@ -92,6 +121,7 @@ export default function MainController() {
                   setPlayers={setPlayers}
                   players={players}
                   style={{ width: "50%" }}
+                  isToggleVisibility={true}
                 ></CardBody>
               </Card>
               <List setViewId={setViewId}></List>

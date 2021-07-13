@@ -17,17 +17,6 @@ export default function CardBody({
 
   return (
     <div>
-      {isToggleVisibility && (
-        <div class="form-check form-switch d-flex flex-column justify-content-center align-items-center">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="flexSwitchCheckDefault"
-            onChange={handleToggleVisibility}
-          />
-        </div>
-      )}
-
       {isPlayerSelect && (
         <div class="d-flex flex-row justify-content-center">
           <button
@@ -42,6 +31,17 @@ export default function CardBody({
           >
             Set PlayerTwo
           </button>
+        </div>
+      )}
+
+      {isToggleVisibility && (
+        <div class="form-check form-switch d-flex flex-column justify-content-center align-items-center">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="flexSwitchCheckDefault"
+            onChange={handleToggleVisibility}
+          />
         </div>
       )}
 

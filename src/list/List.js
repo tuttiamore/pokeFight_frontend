@@ -24,7 +24,7 @@ export default function List({ setViewId }) {
       } else {
         try {
           const { data } = await axios.get(
-            `https://serene-gorge-52427.herokuapp.com/pokemon/search/${searchQuery}`
+            `${pokeUrl}/pokemon/search/${searchQuery}`
           );
           setPokemonList(data);
           setIsError(false);

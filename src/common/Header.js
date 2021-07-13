@@ -11,7 +11,9 @@ export default function Header() {
             </Link>
           </div>
           <div className="navbar-brand">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg"></img>
+            <Link to="/">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg"></img>
+            </Link>
           </div>
           <div className="navbar-text">
             <Link to="/leaderboard">

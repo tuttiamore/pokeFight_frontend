@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useCallback, useEffect } from "react";
 
 const useGetFight = (
@@ -6,22 +5,9 @@ const useGetFight = (
   setPlayers,
   setFightComments,
   isFighting,
-  setIsFighting
+  setIsFighting,
+  setFightResults
 ) => {
-  const pokeUrl = process.env.REACT_APP_POKEURL;
-  // Helper function for posting fight results to leaderboard
-  const postResults = async (winner) => {
-    try {
-      const { data } = await axios.post(
-        `${pokeUrl}/leaderboard/postresult`,
-        winner
-      );
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   // fight game logic
   const getFight = useCallback(() => {
     // set empty comments array:
@@ -79,11 +65,11 @@ const useGetFight = (
     if (players[defendant].base.HP - damage <= 0) {
       comments.push(`${players[attacker].name.english} won!`);
       setFightComments(comments);
-      const winner = {
+      const fightResults = {
         id: players[attacker].id,
         opponentId: players[defendant].id,
       };
-      postResults(winner);
+      setFightResults(fightResults);
       setIsFighting(false);
     } else {
       setFightComments(comments);
