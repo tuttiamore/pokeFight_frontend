@@ -5,8 +5,10 @@ const useGetFight = (
   setPlayers,
   setFightComments,
   isFighting,
-  setIsFighting
+  setIsFighting,
+  setFightResults
 ) => {
+  // fight game logic
   const getFight = useCallback(() => {
     // set empty comments array:
     let comments = [];
@@ -63,6 +65,11 @@ const useGetFight = (
     if (players[defendant].base.HP - damage <= 0) {
       comments.push(`${players[attacker].name.english} won!`);
       setFightComments(comments);
+      const fightResults = {
+        id: players[attacker].id,
+        opponentId: players[defendant].id,
+      };
+      setFightResults(fightResults);
       setIsFighting(false);
     } else {
       setFightComments(comments);

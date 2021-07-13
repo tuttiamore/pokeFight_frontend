@@ -1,9 +1,14 @@
 import { Line } from "rc-progress";
 import Loader from "../utils/Loader";
+import "./card.css";
+import Confetti from "react-confetti";
 
-export default function Card({ details, style, children }) {
+export default function Card({ details, style, children, winner }) {
   return (
     <>
+      {winner && details.id === winner.id && (
+        <Confetti recycle={false}></Confetti>
+      )}
       <div class="card m-3 p-3" style={style}>
         {!details && <Loader></Loader>}
         {details && (
@@ -18,6 +23,7 @@ export default function Card({ details, style, children }) {
                 percent={details.base.HP < 0 ? "0" : String(details.base.HP)}
                 strokeWidth="4"
                 strokeColor="#D3D3D3"
+                className="progress-line"
               />
             </div>
 

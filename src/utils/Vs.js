@@ -22,18 +22,14 @@ export default function PokemonVs({
   };
 
   useEffect(() => {
-    console.log("history push useEff");
-    // console.log(!isFighting && url === "/arena");
-    console.log(!isFighting);
-    console.log(url);
     if (isFighting) {
       setButtonText("Stop fight");
     } else {
       setButtonText("Fight!");
     }
+
     if (!isFighting && url === "/arena") {
       history.push("/");
-      console.log("history push useEff");
     }
   }, [isFighting, history, url]);
 

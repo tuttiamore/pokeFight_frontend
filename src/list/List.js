@@ -8,11 +8,13 @@ export default function List({ setViewId }) {
   const [isError, setIsError] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const pokeUrl = process.env.REACT_APP_POKEURL;
+
   const getPokemons = useCallback(
     async (searchQuery) => {
       if (!searchQuery.length) {
         try {
-          const { data } = await axios.get("http://localhost:3001/pokemon");
+          const { data } = await axios.get(`${pokeUrl}/pokemon`);
           setPokemonList(data);
           setIsError(false);
         } catch (err) {
@@ -22,7 +24,7 @@ export default function List({ setViewId }) {
       } else {
         try {
           const { data } = await axios.get(
-            `https://serene-gorge-52427.herokuapp.com/pokemon/search/${searchQuery}`
+            `${pokeUrl}/pokemon/search/${searchQuery}`
           );
           setPokemonList(data);
           setIsError(false);
