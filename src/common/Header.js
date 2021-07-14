@@ -12,7 +12,10 @@ export default function Header() {
           </div>
           <div className="navbar-brand">
             <Link to="/">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg"></img>
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg"
+                alt="pokemon logo"
+              ></img>
             </Link>
           </div>
           <div className="navbar-text">
