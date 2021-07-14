@@ -1,14 +1,10 @@
 import { Line } from "rc-progress";
 import Loader from "../utils/Loader";
 import "./card.css";
-import Confetti from "react-confetti";
 
-export default function Card({ details, style, children, winner }) {
+export default function Card({ details, style, children }) {
   return (
     <>
-      {winner && details.id === winner.id && (
-        <Confetti recycle={false}></Confetti>
-      )}
       <div class="card m-3 p-3" style={style}>
         {!details && <Loader></Loader>}
         {details && (
